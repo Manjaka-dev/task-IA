@@ -16,7 +16,7 @@ const convertSupabaseUser = (user: SupabaseUser): User => ({
   name: user.name,
   email: user.email,
   role: user.role,
-  avatar: user.avatar,
+  avatar: user.avatar || undefined, // Gérer le cas où avatar est null/undefined
   createdAt: new Date(user.created_at)
 });
 
@@ -86,14 +86,21 @@ export const userService = {
   },
 
   async create(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
+    // Préparer les données sans avatar en premier
+    const insertData: any = {
+      name: userData.name,
+      email: userData.email,
+      role: userData.role
+    };
+    
+    // Ajouter avatar seulement s'il est fourni
+    if (userData.avatar) {
+      insertData.avatar = userData.avatar;
+    }
+
     const { data, error } = await supabase
       .from('users')
-      .insert([{
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-        avatar: userData.avatar
-      }])
+      .insert([insertData])
       .select()
       .single();
     
