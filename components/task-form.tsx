@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -10,8 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Task, User, Module } from '@/lib/types';
+import { Task, User, Module, Subtask } from '@/lib/types';
 import { Plus, Edit } from 'lucide-react';
+import { subtaskService } from '@/lib/supabase-services';
 
 const taskSchema = z.object({
   title: z.string().min(1, 'Le titre est requis'),
@@ -34,6 +35,7 @@ interface TaskFormProps {
 
 export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormProps) {
   const [open, setOpen] = useState(false);
+  const [subtasks, setSubtasks] = useState<Subtask[]>([]);
   
   const form = useForm<z.infer<typeof taskSchema>>({
     resolver: zodResolver(taskSchema),
@@ -48,6 +50,12 @@ export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormPr
       dueDate: task?.dueDate?.toISOString().split('T')[0] || '',
     },
   });
+
+  useEffect(() => {
+    if (task?.id) {
+      subtaskService.getByTask(task.id).then(setSubtasks).catch(console.error);
+    }
+  }, [task?.id]);
 
   const handleSubmit = (data: z.infer<typeof taskSchema>) => {
     const taskData = {
@@ -65,6 +73,37 @@ export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormPr
     onSubmit(taskData);
     setOpen(false);
     form.reset();
+  };
+
+  const handleAddSubtask = async (title: string) => {
+    try {
+      const newSubtask = await subtaskService.create({
+        title,
+        taskId: task?.id || '',
+        status: 'todo'
+      });
+      setSubtasks((prev) => [...prev, newSubtask]);
+    } catch (error) {
+      console.error('Error adding subtask:', error);
+    }
+  };
+
+  const handleUpdateSubtask = async (id: string, updates: Partial<Subtask>) => {
+    try {
+      const updatedSubtask = await subtaskService.update(id, updates);
+      setSubtasks((prev) => prev.map((subtask) => (subtask.id === id ? updatedSubtask : subtask)));
+    } catch (error) {
+      console.error('Error updating subtask:', error);
+    }
+  };
+
+  const handleRemoveSubtask = async (id: string) => {
+    try {
+      await subtaskService.remove(id);
+      setSubtasks((prev) => prev.filter((subtask) => subtask.id !== id));
+    } catch (error) {
+      console.error('Error removing subtask:', error);
+    }
   };
 
   const defaultTrigger = (
@@ -254,6 +293,37 @@ export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormPr
                   </FormItem>
                 )}
               />
+            </div>
+
+            {/* Sous-tâches */}
+            <div className="space-y-2">
+              <h3 className="text-lg font-medium">Sous-tâches</h3>
+              <ul className="space-y-1">
+                {subtasks.map((subtask) => (
+                  <li key={subtask.id} className="flex items-center space-x-2">
+                    <Input
+                      value={subtask.title}
+                      onChange={(e) => handleUpdateSubtask(subtask.id, { title: e.target.value })}
+                      className="flex-1"
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveSubtask(subtask.id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      Supprimer
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleAddSubtask('Nouvelle sous-tâche')}
+              >
+                Ajouter une sous-tâche
+              </Button>
             </div>
 
             <div className="flex justify-end space-x-2">

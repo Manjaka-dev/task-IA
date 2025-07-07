@@ -39,6 +39,16 @@ export interface Comment {
   createdAt: Date;
 }
 
+export interface Subtask {
+  id: string;
+  title: string;
+  description?: string;
+  status: 'todo' | 'in-progress' | 'completed';
+  taskId: string; // Référence à la tâche principale
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Types pour les données brutes de Supabase (snake_case)
 export interface SupabaseUser {
   id: string;
@@ -78,6 +88,16 @@ export interface SupabaseComment {
   author_id: string;
   task_id: string;
   created_at: string;
+}
+
+export interface SupabaseSubtask {
+  id: string;
+  title: string;
+  description?: string;
+  status: 'todo' | 'in-progress' | 'completed';
+  task_id: string; // Référence à la tâche principale
+  created_at: string;
+  updated_at: string;
 }
 
 export interface DashboardStats {

@@ -4,10 +4,12 @@ import {
   Task, 
   Module, 
   Comment, 
+  Subtask,
   SupabaseUser, 
   SupabaseTask, 
   SupabaseModule, 
-  SupabaseComment 
+  SupabaseComment,
+  SupabaseSubtask
 } from './types';
 
 // Fonctions utilitaires pour convertir entre snake_case et camelCase
@@ -49,6 +51,16 @@ const convertSupabaseComment = (comment: SupabaseComment): Comment => ({
   authorId: comment.author_id,
   taskId: comment.task_id,
   createdAt: new Date(comment.created_at)
+});
+
+const convertSupabaseSubtask = (subtask: SupabaseSubtask): Subtask => ({
+  id: subtask.id,
+  title: subtask.title,
+  description: subtask.description,
+  status: subtask.status,
+  taskId: subtask.task_id,
+  createdAt: new Date(subtask.created_at),
+  updatedAt: new Date(subtask.updated_at)
 });
 
 // Users
@@ -413,6 +425,72 @@ export const commentService = {
     
     if (error) {
       console.error('Error deleting comment:', error);
+      throw error;
+    }
+  }
+};
+
+// Subtasks
+export const subtaskService = {
+  async getByTask(taskId: string): Promise<Subtask[]> {
+    const { data, error } = await supabase
+      .from('subtasks')
+      .select('*')
+      .eq('task_id', taskId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw error;
+    }
+
+    return data.map(convertSupabaseSubtask);
+  },
+
+  async create(subtaskData: Omit<Subtask, 'id' | 'createdAt' | 'updatedAt'>): Promise<Subtask> {
+    const { data, error } = await supabase
+      .from('subtasks')
+      .insert([{
+        title: subtaskData.title,
+        description: subtaskData.description,
+        status: subtaskData.status,
+        task_id: subtaskData.taskId
+      }])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating subtask:', error);
+      throw error;
+    }
+
+    return convertSupabaseSubtask(data);
+  },
+
+  async update(id: string, updates: Partial<Omit<Subtask, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Subtask> {
+    const { data, error } = await supabase
+      .from('subtasks')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating subtask:', error);
+      throw error;
+    }
+
+    return convertSupabaseSubtask(data);
+  },
+
+  async remove(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('subtasks')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting subtask:', error);
       throw error;
     }
   }
