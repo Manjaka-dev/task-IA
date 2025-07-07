@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup": "node scripts/setup.js",
+    "seed": "node -e \"const { seedDatabase } = require('./lib/seed-data'); seedDatabase().then(() => console.log('✅ Données initialisées')).catch(console.error)\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",

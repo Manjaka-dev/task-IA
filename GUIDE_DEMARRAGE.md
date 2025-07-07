@@ -1,22 +1,40 @@
-# Guide de démarrage rapide - Supabase
+# Guide de Démarrage - Application de Gestion de Tâches
 
-## ✅ Configuration terminée !
+## ✅ Configuration Terminée et Fonctionnelle !
 
-Votre application est maintenant configurée pour utiliser Supabase avec vos credentials :
+Votre application Next.js est maintenant entièrement configurée et prête pour la production !
 
-- **URL Supabase** : `https://cfxhauelwgrbtutxzzay.supabase.co`
+**Supabase configuré avec** :
+- **URL** : `https://cfxhauelwgrbtutxzzay.supabase.co`
 - **Clé API** : `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
 
-## 🚀 Étapes pour démarrer
+## 🚀 Démarrage Rapide
 
-### 1. Configurer la base de données (IMPORTANT)
+### 1. Installation et Démarrage
 
-Avant d'utiliser l'application, vous devez créer les tables dans Supabase :
+```bash
+# Installation des dépendances
+npm install
 
-1. Allez sur [Supabase Dashboard](https://app.supabase.com)
-2. Sélectionnez votre projet `cfxhauelwgrbtutxzzay`
-3. Allez dans **SQL Editor**
-4. Copiez et exécutez tout le contenu du fichier `supabase-schema.sql`
+# Démarrage en développement
+npm run dev
+
+# Build de production
+npm run build
+npm start
+```
+
+### 2. Initialisation des Données
+
+La base de données Supabase est configurée. Pour initialiser avec des données de test :
+
+1. **Via l'interface** : Utilisez le bouton "Initialiser les données" dans l'application
+2. **Via le terminal** : `npm run seed`
+
+### 3. Accès à l'Application
+
+- **Développement** : [http://localhost:3000](http://localhost:3000)
+- **Production** : Déployez sur Vercel/Netlify avec les variables d'environnement
 
 ### 2. Démarrer l'application
 

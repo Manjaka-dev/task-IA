@@ -15,7 +15,7 @@ export const exportTasksToExcel = (
   const excelData = tasks.map(task => ({
     'Libellé': task.title,
     'Description': task.description || '',
-    'Assigné à': getUserName(task.assignedTo),
+    'Assigné à': task.assignedTo ? getUserName(task.assignedTo) : 'Non assigné',
     'Module': getModuleName(task.moduleId),
     'Statut': task.status,
     'Priorité': task.priority,
@@ -27,7 +27,7 @@ export const exportTasksToExcel = (
     'Date de création': task.createdAt.toLocaleDateString('fr-FR'),
     'Dernière mise à jour': task.updatedAt.toLocaleDateString('fr-FR'),
     'Date limite': task.dueDate?.toLocaleDateString('fr-FR') || '',
-    'Commentaires': task.comments.length,
+    'Commentaires': task.comments?.length || 0,
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(excelData);

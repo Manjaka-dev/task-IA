@@ -40,7 +40,7 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
   const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          task.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         getUserName(task.assignedTo).toLowerCase().includes(searchTerm.toLowerCase());
+                         (task.assignedTo ? getUserName(task.assignedTo).toLowerCase().includes(searchTerm.toLowerCase()) : false);
     
     const matchesStatus = statusFilter === 'all' || task.status === statusFilter;
     const matchesPriority = priorityFilter === 'all' || task.priority === priorityFilter;
@@ -210,9 +210,9 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
                   <TableCell>
                     <div className="flex items-center space-x-2">
                       <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">
-                        {getUserName(task.assignedTo).charAt(0)}
+                        {task.assignedTo ? getUserName(task.assignedTo).charAt(0) : '?'}
                       </div>
-                      <span className="text-sm">{getUserName(task.assignedTo)}</span>
+                      <span className="text-sm">{task.assignedTo ? getUserName(task.assignedTo) : 'Non assigné'}</span>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -241,7 +241,7 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
                   <TableCell>
                     <div className="flex items-center space-x-1">
                       <MessageCircle className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm">{task.comments.length}</span>
+                      <span className="text-sm">{task.comments?.length || 0}</span>
                     </div>
                   </TableCell>
                   <TableCell>
