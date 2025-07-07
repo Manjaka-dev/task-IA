@@ -210,12 +210,21 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">
-                        {task.assignedTo ? getUserName(task.assignedTo).charAt(0) : '?'}
-                      </div>
-                      <span className="text-sm">{task.assignedTo ? getUserName(task.assignedTo) : 'Non assigné'}</span>
-                    </div>
+                    <Select
+                      value={task.assignedTo}
+                      onValueChange={(newAssignedTo) => onUpdateTask(task.id, { assignedTo: newAssignedTo })}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Assigné à" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {users.map(user => (
+                          <SelectItem key={user.id} value={user.id}>
+                            {user.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </TableCell>
                   <TableCell>
                     <Badge 
@@ -224,7 +233,22 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
                       {getModuleName(task.moduleId)}
                     </Badge>
                   </TableCell>
-                  <TableCell>{getStatusBadge(task.status)}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={task.status}
+                      onValueChange={(newStatus: 'todo' | 'in-progress' | 'review' | 'completed') => onUpdateTask(task.id, { status: newStatus })}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Statut" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="todo">À faire</SelectItem>
+                        <SelectItem value="in-progress">En cours</SelectItem>
+                        <SelectItem value="review">En révision</SelectItem>
+                        <SelectItem value="completed">Terminé</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
                   <TableCell>{getPriorityBadge(task.priority)}</TableCell>
                   <TableCell>
                     <span className="text-sm">{task.estimatedTime}h</span>
