@@ -6,7 +6,6 @@ import { TaskTable } from '@/components/task-table';
 import { Dashboard } from '@/components/dashboard';
 import { UserManagement } from '@/components/user-management';
 import { ModuleManagement } from '@/components/module-management';
-import DebugSupabase from '@/components/debug-supabase';
 import { Task, User, Module } from '@/lib/types';
 import { taskService, userService, moduleService } from '@/lib/supabase-services';
 import { seedDatabase } from '@/lib/seed-data';
@@ -273,7 +272,6 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </div>
-      <DebugSupabase />
     </div>
   );
 }
