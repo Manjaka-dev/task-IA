@@ -17,6 +17,7 @@ export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string>('user-id-example');
 
   useEffect(() => {
     loadData();
@@ -207,6 +208,7 @@ export default function Home() {
               onCreateTask={handleCreateTask}
               onUpdateTask={handleUpdateTask}
               onDeleteTask={handleDeleteTask}
+              currentUserId={currentUserId}
             />
           </TabsContent>
 
