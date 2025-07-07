@@ -238,6 +238,7 @@ export default function Home() {
               onCreateTask={handleCreateTask}
               onUpdateTask={handleUpdateTask}
               onDeleteTask={handleDeleteTask}
+              currentUserId={users.find(u => u.role === 'admin')?.id || users[0]?.id || ''}
             />
           </TabsContent>
 

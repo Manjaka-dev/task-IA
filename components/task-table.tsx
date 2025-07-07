@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TaskForm } from './task-form';
+import { TaskComments } from './task-comments';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { exportTasksToExcel } from '@/lib/excel-export';
-import { Download, Search, Filter, Trash2, MessageCircle, Edit } from 'lucide-react';
+import { Download, Search, Filter, Trash2, Edit } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 interface TaskTableProps {
@@ -20,9 +21,10 @@ interface TaskTableProps {
   onUpdateTask: (id: string, updates: Partial<Task>) => void;
   onDeleteTask: (id: string) => void;
   onCreateTask: (task: Partial<Task>) => void;
+  currentUserId: string;
 }
 
-export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, onCreateTask }: TaskTableProps) {
+export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, onCreateTask, currentUserId }: TaskTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
@@ -239,10 +241,11 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
                     </span>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center space-x-1">
-                      <MessageCircle className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm">{task.comments?.length || 0}</span>
-                    </div>
+                    <TaskComments
+                      task={task}
+                      users={users}
+                      currentUserId={currentUserId}
+                    />
                   </TableCell>
                   <TableCell>
                     <span className="text-sm">
