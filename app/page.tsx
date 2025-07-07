@@ -6,6 +6,7 @@ import { TaskTable } from '@/components/task-table';
 import { Dashboard } from '@/components/dashboard';
 import { UserManagement } from '@/components/user-management';
 import { ModuleManagement } from '@/components/module-management';
+import DebugSupabase from '@/components/debug-supabase';
 import { Task, User, Module } from '@/lib/types';
 import { taskService, userService, moduleService } from '@/lib/supabase-services';
 import { seedDatabase } from '@/lib/seed-data';
@@ -25,10 +26,18 @@ export default function Home() {
   const loadData = async () => {
     try {
       setLoading(true);
+      
+      // Vérification des variables d'environnement d'abord
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        console.error('Variables d\'environnement Supabase manquantes');
+        setLoading(false);
+        return;
+      }
+
       const [tasksData, usersData, modulesData] = await Promise.all([
-        taskService.getAll(),
-        userService.getAll(),
-        moduleService.getAll()
+        taskService.getAll().catch(err => { console.error('Error fetching tasks:', err); return []; }),
+        userService.getAll().catch(err => { console.error('Error fetching users:', err); return []; }),
+        moduleService.getAll().catch(err => { console.error('Error fetching modules:', err); return []; })
       ]);
       setTasks(tasksData);
       setUsers(usersData);
@@ -264,6 +273,7 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </div>
+      <DebugSupabase />
     </div>
   );
 }
