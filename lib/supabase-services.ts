@@ -298,7 +298,7 @@ export const taskService = {
         status: taskData.status,
         priority: taskData.priority,
         estimated_time: taskData.estimatedTime,
-        actual_time: taskData.actualTime,
+        actual_time: taskData.actualTime || 0, // Garantir une valeur par défaut
         due_date: taskData.dueDate?.toISOString()
       }])
       .select()

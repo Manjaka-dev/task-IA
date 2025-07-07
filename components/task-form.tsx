@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Task, User, Module } from '@/lib/types';
 import { Plus, Edit } from 'lucide-react';
 
@@ -51,7 +51,14 @@ export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormPr
 
   const handleSubmit = (data: z.infer<typeof taskSchema>) => {
     const taskData = {
-      ...data,
+      title: data.title,
+      description: data.description || '',
+      assignedTo: data.assignedTo,
+      moduleId: data.moduleId,
+      status: data.status,
+      priority: data.priority,
+      estimatedTime: data.estimatedTime,
+      actualTime: 0, // Valeur par défaut pour actual_time
       dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
     };
     
@@ -77,6 +84,9 @@ export function TaskForm({ task, users, modules, onSubmit, trigger }: TaskFormPr
           <DialogTitle>
             {task ? 'Modifier la tâche' : 'Créer une nouvelle tâche'}
           </DialogTitle>
+          <DialogDescription>
+            {task ? 'Modifiez les informations de la tâche ci-dessous.' : 'Remplissez les informations pour créer une nouvelle tâche.'}
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
