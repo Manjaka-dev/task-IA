@@ -362,6 +362,17 @@ export const taskService = {
       console.error('Error deleting task:', error);
       throw error;
     }
+  },
+
+  async clearAll(): Promise<void> {
+    const { error } = await supabase
+      .from('tasks')
+      .delete();
+
+    if (error) {
+      console.error('Error clearing all tasks:', error);
+      throw error;
+    }
   }
 };
 
