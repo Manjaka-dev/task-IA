@@ -365,36 +365,34 @@ export const taskService = {
   },
 
   async clearAll(): Promise<void> {
-    const { error } = await supabase
+    // Suppression des tâches
+    const { error: taskError } = await supabase
       .from('tasks')
-      .delete()
-      .neq('id', ''); // Ajout d'une clause WHERE pour éviter l'erreur DELETE
+      .delete();
 
-    if (error) {
-      console.error('Error clearing all tasks:', error);
-      throw error;
+    if (taskError) {
+      console.error('Error clearing all tasks:', taskError);
+      throw taskError;
     }
 
-    // Suppression des sous-tâches liées
-    const subtaskError = await supabase
+    // Suppression des sous-tâches
+    const { error: subtaskError } = await supabase
       .from('subtasks')
-      .delete()
-      .neq('id', '');
+      .delete();
 
-    if (subtaskError.error) {
-      console.error('Error clearing all subtasks:', subtaskError.error);
-      throw subtaskError.error;
+    if (subtaskError) {
+      console.error('Error clearing all subtasks:', subtaskError);
+      throw subtaskError;
     }
 
-    // Suppression des commentaires liés
-    const commentError = await supabase
+    // Suppression des commentaires
+    const { error: commentError } = await supabase
       .from('comments')
-      .delete()
-      .neq('id', '');
+      .delete();
 
-    if (commentError.error) {
-      console.error('Error clearing all comments:', commentError.error);
-      throw commentError.error;
+    if (commentError) {
+      console.error('Error clearing all comments:', commentError);
+      throw commentError;
     }
   }
 };
