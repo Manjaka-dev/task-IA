@@ -367,11 +367,34 @@ export const taskService = {
   async clearAll(): Promise<void> {
     const { error } = await supabase
       .from('tasks')
-      .delete();
+      .delete()
+      .neq('id', ''); // Ajout d'une clause WHERE pour éviter l'erreur DELETE
 
     if (error) {
       console.error('Error clearing all tasks:', error);
       throw error;
+    }
+
+    // Suppression des sous-tâches liées
+    const subtaskError = await supabase
+      .from('subtasks')
+      .delete()
+      .neq('id', '');
+
+    if (subtaskError.error) {
+      console.error('Error clearing all subtasks:', subtaskError.error);
+      throw subtaskError.error;
+    }
+
+    // Suppression des commentaires liés
+    const commentError = await supabase
+      .from('comments')
+      .delete()
+      .neq('id', '');
+
+    if (commentError.error) {
+      console.error('Error clearing all comments:', commentError.error);
+      throw commentError.error;
     }
   }
 };
