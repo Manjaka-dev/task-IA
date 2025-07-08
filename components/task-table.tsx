@@ -106,12 +106,25 @@ export function TaskTable({ tasks, users, modules, onUpdateTask, onDeleteTask, o
     exportTasksToExcel(filteredTasks, users, modules);
   };
 
+  const handleResetTasks = async () => {
+    try {
+      await taskService.clearAll();
+      alert('Toutes les tâches ont été supprimées avec succès.');
+    } catch (error) {
+      console.error('Erreur lors de la réinitialisation des tâches:', error);
+      alert('Une erreur est survenue lors de la réinitialisation des tâches.');
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="text-2xl font-bold">Gestion des tâches</CardTitle>
           <div className="flex space-x-2">
+            <Button onClick={handleResetTasks} variant="outline" size="sm">
+              Réinitialiser les tâches
+            </Button>
             <Button onClick={handleExport} variant="outline" size="sm">
               <Download className="w-4 h-4 mr-2" />
               Export Excel
