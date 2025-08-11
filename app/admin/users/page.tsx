@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ShieldIcon, UserIcon, MailIcon, CalendarIcon, CheckIcon, XIcon, BanIcon } from 'lucide-react';
+import { Shield, UserIcon, MailIcon, CalendarIcon, CheckIcon, XIcon, BanIcon } from 'lucide-react';
 import { authService } from '@/lib/auth-service';
 import { User } from '@/lib/types';
 import { formatDate, getInitials, getRoleColor } from '@/lib/utils';
@@ -84,7 +84,7 @@ export default function AdminUsersPage() {
     return (
       <div className="container mx-auto py-6">
         <Alert variant="destructive">
-          <ShieldIcon className="h-4 w-4" />
+          <Shield className="h-4 w-4" />
           <AlertDescription>
             Accès refusé. Vous devez être administrateur pour accéder à cette page.
           </AlertDescription>
