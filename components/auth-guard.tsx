@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/auth-provider';
-import { Loader2Icon } from 'lucide-react';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -43,7 +42,6 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
       // Si pas d'utilisateur connecté sur une route privée, rediriger vers login
       if (!user) {
-        console.log('🔴 AuthGuard: Pas d\'utilisateur connecté, redirection vers /login');
         router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
         return;
       }
@@ -60,7 +58,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <Loader2Icon className="w-8 h-8 animate-spin mx-auto" />
+          <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
           <p className="text-gray-600">Vérification de l'authentification...</p>
         </div>
       </div>
