@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, TriangleAlert, Loader2 } from 'lucide-react';
+import { Check, X, AlertCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface DiagnosticResult {
@@ -32,7 +32,7 @@ export default function AuthDiagnostic() {
         message: 'Connexion à Supabase établie'
       });
 
-      // Test 2: Vérifier si la table users existe
+      // Test 2: V��rifier si la table users existe
       try {
         const { data: usersTest, error: usersError } = await supabase
           .from('users')
@@ -154,7 +154,7 @@ export default function AuthDiagnostic() {
       case 'error':
         return <X className="h-4 w-4 text-red-600" />;
       case 'warning':
-        return <TriangleAlert className="h-4 w-4 text-yellow-600" />;
+        return <AlertCircle className="h-4 w-4 text-yellow-600" />;
     }
   };
 
@@ -173,7 +173,7 @@ export default function AuthDiagnostic() {
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <TriangleAlert className="h-5 w-5" />
+          <AlertCircle className="h-5 w-5" />
           Diagnostic d'authentification
         </CardTitle>
         <CardDescription>
@@ -227,7 +227,7 @@ export default function AuthDiagnostic() {
 
         {results.length > 0 && (
           <Alert>
-            <TriangleAlert className="h-4 w-4" />
+            <AlertCircle className="h-4 w-4" />
             <AlertDescription>
               <strong>Prochaines étapes :</strong><br/>
               1. Si le profil admin n'existe pas → Allez sur <a href="/init" className="text-blue-600 underline">/init</a><br/>
