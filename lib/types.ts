@@ -4,7 +4,46 @@ export interface User {
   email: string;
   role: 'admin' | 'manager' | 'developer' | 'designer';
   avatar?: string;
+  status: 'active' | 'inactive' | 'suspended';
+  lastLogin?: Date;
+  passwordChangedAt?: Date;
   createdAt: Date;
+}
+
+export interface AuthUser extends User {
+  password?: string;
+  isActive: boolean;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterCredentials {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role?: 'manager' | 'developer' | 'designer';
+}
+
+export interface UserRequest {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'manager' | 'developer' | 'designer';
+  status: 'pending' | 'approved' | 'rejected';
+  requestedAt: Date;
+  reviewedAt?: Date;
+  reviewedBy?: string;
+  rejectionReason?: string;
+}
+
+export interface PasswordChangeRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface Module {

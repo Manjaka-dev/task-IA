@@ -310,7 +310,7 @@ export const taskService = {
         status: taskData.status,
         priority: taskData.priority,
         estimated_time: taskData.estimatedTime,
-        actual_time: taskData.actualTime || 0, // Garantir une valeur par défaut
+        actual_time: taskData.actualTime || 0,
         due_date: taskData.dueDate?.toISOString()
       }])
       .select()
@@ -368,7 +368,7 @@ export const taskService = {
     // Suppression des tâches
     const { error: taskError } = await supabase
       .from('tasks')
-      .delete();
+      .delete(); // Suppression globale sans clause WHERE
 
     if (taskError) {
       console.error('Error clearing all tasks:', taskError);
