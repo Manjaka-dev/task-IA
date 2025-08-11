@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { CalendarIcon, MailIcon, UserIcon, ClockIcon } from 'lucide-react';
+import { Calendar, Mail, User, Clock } from 'lucide-react';
 import PasswordChangeForm from '@/components/password-change-form';
 import { useAuth } from '@/components/auth-provider';
 import { formatDate, formatDateTime, getInitials, getRoleColor } from '@/lib/utils';
@@ -41,7 +41,7 @@ export default function ProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <UserIcon className="h-5 w-5" />
+              <User className="h-5 w-5" />
               Informations personnelles
             </CardTitle>
             <CardDescription>
@@ -66,12 +66,12 @@ export default function ProfilePage() {
 
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <MailIcon className="h-4 w-4 text-gray-500" />
+                <Mail className="h-4 w-4 text-gray-500" />
                 <span>{userProfile.email}</span>
               </div>
 
               <div className="flex items-center space-x-3">
-                <CalendarIcon className="h-4 w-4 text-gray-500" />
+                <Calendar className="h-4 w-4 text-gray-500" />
                 <span>
                   Membre depuis le {formatDate(new Date(userProfile.createdAt))}
                 </span>
@@ -79,7 +79,7 @@ export default function ProfilePage() {
 
               {userProfile.lastLogin && (
                 <div className="flex items-center space-x-3">
-                  <ClockIcon className="h-4 w-4 text-gray-500" />
+                  <Clock className="h-4 w-4 text-gray-500" />
                   <span>
                     Dernière connexion : {formatDateTime(new Date(userProfile.lastLogin))}
                   </span>
