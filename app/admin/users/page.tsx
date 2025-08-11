@@ -9,14 +9,14 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Shield, UserIcon, MailIcon, CalendarIcon, CheckIcon, XIcon, BanIcon } from 'lucide-react';
+import { Shield, User, Mail, Calendar, Check, X, Ban } from 'lucide-react';
 import { authService } from '@/lib/auth-service';
-import { User } from '@/lib/types';
+import { User as UserType } from '@/lib/types';
 import { formatDate, getInitials, getRoleColor } from '@/lib/utils';
 
 export default function AdminUsersPage() {
   const { isAdmin, loading, userProfile } = useAuth();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [error, setError] = useState('');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -102,7 +102,7 @@ export default function AdminUsersPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <UserIcon className="h-5 w-5" />
+            <User className="h-5 w-5" />
             Utilisateurs de l'application
           </CardTitle>
           <CardDescription>
@@ -150,7 +150,7 @@ export default function AdminUsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <MailIcon className="h-4 w-4 text-gray-400" />
+                        <Mail className="h-4 w-4 text-gray-400" />
                         {user.email}
                       </div>
                     </TableCell>
@@ -164,7 +164,7 @@ export default function AdminUsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <CalendarIcon className="h-4 w-4 text-gray-400" />
+                        <Calendar className="h-4 w-4 text-gray-400" />
                         {formatDate(new Date(user.createdAt))}
                       </div>
                     </TableCell>
@@ -179,12 +179,12 @@ export default function AdminUsersPage() {
                             >
                               {user.status === 'active' ? (
                                 <>
-                                  <BanIcon className="h-4 w-4 mr-1" />
+                                  <Ban className="h-4 w-4 mr-1" />
                                   Suspendre
                                 </>
                               ) : (
                                 <>
-                                  <CheckIcon className="h-4 w-4 mr-1" />
+                                  <Check className="h-4 w-4 mr-1" />
                                   Réactiver
                                 </>
                               )}
