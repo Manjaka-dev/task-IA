@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, AlertCircle, Loader } from 'lucide-react';
+import { Check, X, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface DiagnosticResult {
@@ -187,10 +187,7 @@ export default function AuthDiagnostic() {
           className="w-full"
         >
           {loading ? (
-            <>
-              <Loader className="mr-2 h-4 w-4 animate-spin" />
-              Diagnostic en cours...
-            </>
+            'Diagnostic en cours...'
           ) : (
             'Lancer le diagnostic'
           )}
