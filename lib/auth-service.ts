@@ -349,5 +349,17 @@ export const authService = {
    */
   async repairStorage() {
     return await storageService.repairStorage();
+  },
+
+  /**
+   * Envoyer un email de réinitialisation de mot de passe
+   */
+  async resetPassword(email: string) {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (error) throw error;
+    return true;
   }
 };
