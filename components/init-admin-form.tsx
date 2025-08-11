@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckIcon, AlertCircleIcon, Loader2Icon } from 'lucide-react';
+import { Check, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export default function InitAdminForm() {
@@ -108,13 +108,13 @@ export default function InitAdminForm() {
       <Card className="max-w-md mx-auto">
         <CardHeader>
           <CardTitle className="text-green-600 flex items-center gap-2">
-            <CheckIcon className="h-5 w-5" />
+            <Check className="h-5 w-5" />
             Initialisation réussie !
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Alert className="border-green-200 bg-green-50">
-            <CheckIcon className="h-4 w-4" />
+            <Check className="h-4 w-4" />
             <AlertDescription className="text-green-800">
               Le compte administrateur a été créé avec succès.<br/>
               <strong>Email:</strong> manjaka@admin.com<br/>
@@ -136,7 +136,7 @@ export default function InitAdminForm() {
     <Card className="max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <AlertCircleIcon className="h-5 w-5" />
+          <AlertCircle className="h-5 w-5" />
           Configuration initiale requise
         </CardTitle>
         <CardDescription>
@@ -164,10 +164,7 @@ export default function InitAdminForm() {
           className="w-full"
         >
           {loading ? (
-            <>
-              <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-              Initialisation en cours...
-            </>
+            'Initialisation en cours...'
           ) : (
             'Créer le compte administrateur'
           )}
