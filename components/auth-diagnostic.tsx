@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, AlertCircle, Loader2 } from 'lucide-react';
+import { Check, X, AlertCircle, Loader } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface DiagnosticResult {
@@ -32,7 +32,7 @@ export default function AuthDiagnostic() {
         message: 'Connexion à Supabase établie'
       });
 
-      // Test 2: V��rifier si la table users existe
+      // Test 2: V���rifier si la table users existe
       try {
         const { data: usersTest, error: usersError } = await supabase
           .from('users')
@@ -188,7 +188,7 @@ export default function AuthDiagnostic() {
         >
           {loading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader className="mr-2 h-4 w-4 animate-spin" />
               Diagnostic en cours...
             </>
           ) : (
