@@ -47,44 +47,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const checkAuth = async () => {
       if (isChecking) {
-        console.log('🔄 Vérification déjà en cours, skip...');
         return;
       }
 
       isChecking = true;
 
       try {
-        console.log('🔄 AuthProvider - Vérification localStorage...');
-
         const currentUser = await authService.getCurrentUser();
         const session = await authService.getSession();
 
-        console.log('📋 localStorage check:', {
-          userExists: !!currentUser,
-          sessionExists: !!session?.session,
-        });
-
         if (currentUser && session?.session) {
           setUser(currentUser);
-          console.log('👤 Chargement du profil pour:', currentUser.email);
 
           try {
             const profile = await authService.getUserProfile(currentUser.id);
             setUserProfile(profile);
             setIsAdmin(profile.role === 'admin');
-            console.log('✅ Profil chargé:', profile.name, '-', profile.role);
           } catch (profileError) {
-            console.error('❌ Erreur profil:', profileError);
             // Ne pas déconnecter automatiquement, juste ne pas charger le profil
           }
         } else {
-          console.log('❌ Pas d\'authentification valide dans localStorage');
           setUser(null);
           setUserProfile(null);
           setIsAdmin(false);
         }
       } catch (error) {
-        console.error('Erreur lors de la vérification auth:', error);
         setUser(null);
         setUserProfile(null);
         setIsAdmin(false);
@@ -102,8 +89,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key?.startsWith('taskmanager_')) {
-        console.log('🔄 Changement localStorage détecté:', e.key);
-
         // Debounce pour éviter les vérifications trop fréquentes
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
@@ -113,8 +98,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const handleCustomStorageChange = () => {
-      console.log('🔄 Changement localStorage interne détecté');
-
       // Debounce pour les changements internes aussi
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
@@ -133,11 +116,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    console.log('🔐 Début de la connexion...');
     const { user: authUser, session } = await authService.login({ email, password });
 
     if (authUser && session) {
-      console.log('✅ Utilisateur authentifié:', authUser.id);
       setUser(authUser);
 
       // Forcer le rechargement du profil ET sauvegarder dans localStorage
@@ -150,12 +131,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('taskmanager_user', JSON.stringify(authUser));
         localStorage.setItem('taskmanager_session', JSON.stringify(session));
         localStorage.setItem('taskmanager_profile', JSON.stringify(profile));
-
-        console.log('✅ Profil chargé et sauvegardé:', profile);
       } catch (error) {
-        console.error('❌ Erreur profil:', error);
         // Si le profil n'existe pas, on déconnecte l'utilisateur
-        console.log('❌ Profil manquant, déconnexion...');
         await authService.logout();
         setUser(null);
         setUserProfile(null);
@@ -166,12 +143,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    console.log('👋 Déconnexion...');
     await authService.logout();
     setUser(null);
     setUserProfile(null);
     setIsAdmin(false);
-    console.log('✅ Déconnexion terminée');
   };
 
   return (

@@ -20,7 +20,6 @@ export const authService = {
       const sessionSaved = storageService.setItem(STORAGE_KEYS.SESSION, JSON.stringify(data.session));
 
       if (!userSaved || !sessionSaved) {
-        console.warn('⚠️ Problème de sauvegarde dans le stockage');
         // Tenter de réparer le stockage
         await storageService.repairStorage();
       }
@@ -64,17 +63,12 @@ export const authService = {
 
       const user = JSON.parse(userStr);
 
-      // Vérifier que la session existe (sans vérification d'expiration pour l'instant)
+      // Vérifier que la session existe
       const sessionStr = storageService.getItem(STORAGE_KEYS.SESSION);
       if (!sessionStr) return null;
 
-      // TODO: Réactiver la vérification d'expiration plus tard
-      // Pour l'instant, on fait confiance au localStorage
-      console.log('✅ Utilisateur trouvé dans localStorage:', user.email);
-
       return user;
     } catch (error) {
-      console.error('Erreur getCurrentUser:', error);
       return null;
     }
   },
@@ -92,9 +86,6 @@ export const authService = {
       const session = JSON.parse(sessionStr);
       const user = JSON.parse(userStr);
 
-      // TODO: Réactiver la vérification d'expiration plus tard
-      console.log('✅ Session trouvée dans localStorage');
-
       return {
         session: {
           ...session,
@@ -102,7 +93,6 @@ export const authService = {
         }
       };
     } catch (error) {
-      console.error('Erreur getSession:', error);
       return { session: null };
     }
   },

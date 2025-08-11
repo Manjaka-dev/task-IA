@@ -10,8 +10,6 @@ export async function middleware(req: NextRequest) {
   }
 
   // Pour une application basée sur localStorage, on laisse l'AuthGuard côté client gérer l'authentification
-  // Le middleware ne peut pas accéder au localStorage, donc on laisse passer toutes les routes
-  console.log('🟢 Route autorisée (AuthGuard gérera l\'auth):', req.nextUrl.pathname);
   return NextResponse.next();
 }
 

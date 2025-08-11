@@ -31,23 +31,16 @@ export default function LoginForm() {
     setError('');
 
     try {
-      console.log('🔐 Tentative de connexion pour:', email);
-
-      // Connexion via le service d'authentification amélioré
+      // Connexion via le service d'authentification
       await signIn(email, password);
-      console.log('✅ Connexion réussie');
 
       // Récupérer l'URL de retour depuis les paramètres de recherche
       const returnUrl = searchParams.get('returnUrl');
       const redirectTo = returnUrl && returnUrl !== '/' ? returnUrl : '/';
 
-      console.log('🔄 Redirection vers:', redirectTo);
-
       // Redirection immédiate
       window.location.href = redirectTo;
     } catch (error: any) {
-      console.error('❌ Erreur de connexion:', error);
-
       // Messages d'erreur plus détaillés
       if (error.message?.includes('Invalid login credentials')) {
         setError('Email ou mot de passe incorrect.');

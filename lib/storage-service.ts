@@ -47,14 +47,7 @@ export class StorageService {
       localStorage.removeItem(testKey);
 
       this.isLocalStorageAvailable = retrieved === testValue;
-
-      if (this.isLocalStorageAvailable) {
-        console.log('✅ localStorage est disponible et fonctionnel');
-      } else {
-        console.warn('⚠️ localStorage n\'est pas fonctionnel, utilisation du stockage mémoire');
-      }
     } catch (error) {
-      console.error('❌ localStorage n\'est pas disponible:', error);
       this.isLocalStorageAvailable = false;
     }
   }
@@ -72,21 +65,16 @@ export class StorageService {
     try {
       if (this.isLocalStorageAvailable) {
         localStorage.setItem(key, value);
-        console.log(`💾 Sauvegardé dans localStorage: ${key}`);
       } else {
         this.memoryStorage.set(key, value);
-        console.log(`💾 Sauvegardé en mémoire: ${key}`);
       }
       return true;
     } catch (error) {
-      console.error(`❌ Erreur de sauvegarde ${key}:`, error);
       // Fallback vers le stockage mémoire
       try {
         this.memoryStorage.set(key, value);
-        console.log(`💾 Fallback mémoire pour: ${key}`);
         return true;
       } catch (fallbackError) {
-        console.error(`❌ Échec du fallback mémoire:`, fallbackError);
         return false;
       }
     }
@@ -105,7 +93,6 @@ export class StorageService {
       if (this.isLocalStorageAvailable) {
         const value = localStorage.getItem(key);
         if (value) {
-          console.log(`📥 Récupéré depuis localStorage: ${key}`);
           return value;
         }
       }
@@ -113,13 +100,11 @@ export class StorageService {
       // Fallback vers le stockage mémoire
       const memoryValue = this.memoryStorage.get(key);
       if (memoryValue) {
-        console.log(`📥 Récupéré depuis la mémoire: ${key}`);
         return memoryValue;
       }
 
       return null;
     } catch (error) {
-      console.error(`❌ Erreur de récupération ${key}:`, error);
       return this.memoryStorage.get(key) || null;
     }
   }
@@ -133,9 +118,8 @@ export class StorageService {
         localStorage.removeItem(key);
       }
       this.memoryStorage.delete(key);
-      console.log(`🗑️ Supprimé: ${key}`);
     } catch (error) {
-      console.error(`❌ Erreur de suppression ${key}:`, error);
+      // Ignorer les erreurs de suppression
     }
   }
 
@@ -151,9 +135,8 @@ export class StorageService {
         });
       }
       this.memoryStorage.clear();
-      console.log('🗑️ Stockage vidé');
     } catch (error) {
-      console.error('❌ Erreur lors du vidage:', error);
+      // Ignorer les erreurs de vidage
     }
   }
 
@@ -188,11 +171,8 @@ export class StorageService {
    */
   async repairStorage(): Promise<boolean> {
     if (!this.isClient) {
-      console.log('⚠️ Impossible de réparer le stockage côté serveur');
       return false;
     }
-
-    console.log('🔧 Tentative de réparation du stockage...');
 
     try {
       // Sauvegarder les données actuelles
@@ -213,14 +193,11 @@ export class StorageService {
         currentData.forEach((value, key) => {
           this.setItem(key, value);
         });
-        console.log('✅ Stockage réparé avec succès');
         return true;
       }
 
-      console.log('⚠️ localStorage toujours non disponible');
       return false;
     } catch (error) {
-      console.error('❌ Échec de la réparation:', error);
       return false;
     }
   }
