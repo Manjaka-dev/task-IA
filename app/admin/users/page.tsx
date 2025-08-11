@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Shield, User, Mail, Calendar, Check, X, UserX } from 'lucide-react';
+import { Shield, User, Mail, Calendar, Check, X, UserMinus } from 'lucide-react';
 import { authService } from '@/lib/auth-service';
 import { User as UserType } from '@/lib/types';
 import { formatDate, getInitials, getRoleColor } from '@/lib/utils';
@@ -179,7 +179,7 @@ export default function AdminUsersPage() {
                             >
                               {user.status === 'active' ? (
                                 <>
-                                  <UserX className="h-4 w-4 mr-1" />
+                                  <UserMinus className="h-4 w-4 mr-1" />
                                   Suspendre
                                 </>
                               ) : (
