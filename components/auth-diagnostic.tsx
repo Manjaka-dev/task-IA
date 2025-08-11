@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { CheckIcon, XIcon, AlertTriangleIcon, Loader2Icon } from 'lucide-react';
+import { Check, X, AlertTriangle, Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface DiagnosticResult {
@@ -150,11 +150,11 @@ export default function AuthDiagnostic() {
   const getStatusIcon = (status: DiagnosticResult['status']) => {
     switch (status) {
       case 'success':
-        return <CheckIcon className="h-4 w-4 text-green-600" />;
+        return <Check className="h-4 w-4 text-green-600" />;
       case 'error':
-        return <XIcon className="h-4 w-4 text-red-600" />;
+        return <X className="h-4 w-4 text-red-600" />;
       case 'warning':
-        return <AlertTriangleIcon className="h-4 w-4 text-yellow-600" />;
+        return <AlertTriangle className="h-4 w-4 text-yellow-600" />;
     }
   };
 
@@ -173,7 +173,7 @@ export default function AuthDiagnostic() {
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <AlertTriangleIcon className="h-5 w-5" />
+          <AlertTriangle className="h-5 w-5" />
           Diagnostic d'authentification
         </CardTitle>
         <CardDescription>
@@ -188,7 +188,7 @@ export default function AuthDiagnostic() {
         >
           {loading ? (
             <>
-              <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Diagnostic en cours...
             </>
           ) : (
@@ -227,7 +227,7 @@ export default function AuthDiagnostic() {
 
         {results.length > 0 && (
           <Alert>
-            <AlertTriangleIcon className="h-4 w-4" />
+            <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
               <strong>Prochaines étapes :</strong><br/>
               1. Si le profil admin n'existe pas → Allez sur <a href="/init" className="text-blue-600 underline">/init</a><br/>
