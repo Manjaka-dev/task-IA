@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { CheckIcon, XIcon, AlertTriangleIcon, Loader2Icon, TrashIcon, RepairIcon } from 'lucide-react';
+import { Check, X, AlertCircle, Trash } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { authService } from '@/lib/auth-service';
 import { storageService } from '@/lib/storage-service';
@@ -168,7 +168,7 @@ export default function LocalStorageDebug() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <AlertTriangleIcon className="w-5 h-5" />
+            <AlertCircle className="w-5 h-5" />
             Diagnostic du Stockage LocalStorage
           </CardTitle>
           <CardDescription>
@@ -193,8 +193,8 @@ export default function LocalStorageDebug() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   {storageStatus.localStorage ?
-                    <CheckIcon className="w-4 h-4 text-green-500" /> :
-                    <XIcon className="w-4 h-4 text-red-500" />
+                    <Check className="w-4 h-4 text-green-500" /> :
+                    <X className="w-4 h-4 text-red-500" />
                   }
                   <span className="text-sm font-medium">localStorage</span>
                 </div>
@@ -217,24 +217,24 @@ export default function LocalStorageDebug() {
             </Button>
 
             <Button onClick={testStorageWrite} disabled={loading} variant="outline">
-              {loading ? <Loader2Icon className="w-4 h-4 animate-spin mr-2" /> : null}
+              {loading ? null : null}
               ✏️ Tester l'écriture
             </Button>
 
             <Button onClick={testSupabaseConnection} disabled={loading} variant="outline">
-              {loading ? <Loader2Icon className="w-4 h-4 animate-spin mr-2" /> : null}
+              {loading ? null : null}
               🔗 Tester Supabase
             </Button>
 
             {!storageStatus.localStorage && (
               <Button onClick={repairStorage} disabled={loading || repairAttempted} variant="outline">
-                {loading ? <Loader2Icon className="w-4 h-4 animate-spin mr-2" /> : null}
+                {loading ? null : null}
                 🔧 Réparer le stockage
               </Button>
             )}
 
             <Button onClick={clearLocalStorage} variant="destructive">
-              <TrashIcon className="w-4 h-4 mr-2" />
+              <Trash className="w-4 h-4 mr-2" />
               Vider le stockage
             </Button>
           </div>
@@ -242,7 +242,7 @@ export default function LocalStorageDebug() {
           {/* Messages d'alerte */}
           {storageStatus.mode === 'memory' && (
             <Alert>
-              <AlertTriangleIcon className="w-4 h-4" />
+              <AlertCircle className="w-4 h-4" />
               <AlertDescription>
                 ⚠️ Le localStorage n'est pas disponible. L'application utilise le stockage en mémoire.
                 Vos données seront perdues lors du rechargement de la page.
@@ -252,7 +252,7 @@ export default function LocalStorageDebug() {
 
           {storageStatus.mode === 'hybrid' && (
             <Alert>
-              <AlertTriangleIcon className="w-4 h-4" />
+              <AlertCircle className="w-4 h-4" />
               <AlertDescription>
                 🔄 Mode hybride détecté. Certaines données sont en mémoire, d'autres dans localStorage.
               </AlertDescription>
