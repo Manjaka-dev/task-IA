@@ -18,6 +18,7 @@ const convertSupabaseUser = (user: SupabaseUser): User => ({
   name: user.name,
   email: user.email,
   role: user.role,
+  status: user.status,
   avatar: user.avatar || undefined, // Gérer le cas où avatar est null/undefined
   createdAt: new Date(user.created_at)
 });

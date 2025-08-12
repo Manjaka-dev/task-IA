@@ -94,6 +94,7 @@ export interface SupabaseUser {
   name: string;
   email: string;
   role: 'admin' | 'manager' | 'developer' | 'designer';
+  status: 'active' | 'inactive' | 'suspended';
   avatar?: string;
   created_at: string;
 }

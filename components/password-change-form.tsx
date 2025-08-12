@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { KeyIcon, CheckIcon } from 'lucide-react';
+import { Key, Check } from 'lucide-react';
 import { authService } from '@/lib/auth-service';
 import { PasswordChangeRequest } from '@/lib/types';
 
@@ -69,7 +69,7 @@ export default function PasswordChangeForm() {
     <Card className="max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <KeyIcon className="h-5 w-5" />
+          <Key className="h-5 w-5" />
           Changer le mot de passe
         </CardTitle>
         <CardDescription>
@@ -86,7 +86,7 @@ export default function PasswordChangeForm() {
 
           {success && (
             <Alert className="border-green-200 bg-green-50">
-              <CheckIcon className="h-4 w-4" />
+              <Check className="h-4 w-4" />
               <AlertDescription className="text-green-800">
                 Votre mot de passe a été changé avec succès !
               </AlertDescription>

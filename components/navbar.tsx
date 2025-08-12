@@ -9,14 +9,14 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/components/auth-provider';
 import { getInitials, getRoleColor } from '@/lib/utils';
 import {
-  HomeIcon,
-  FolderIcon,
-  UsersIcon,
-  SettingsIcon,
-  LogOutIcon,
-  UserIcon,
-  KeyIcon,
-  UserPlusIcon
+  Home,
+  Folder,
+  Users,
+  Settings,
+  LogOut,
+  User,
+  Key,
+  UserPlus
 } from 'lucide-react';
 
 export function Navbar() {
@@ -74,11 +74,11 @@ export function Navbar() {
   }
 
   const navigation = [
-    { name: 'Tableau de bord', href: '/', icon: HomeIcon },
-    { name: 'Modules', href: '/modules', icon: FolderIcon },
+    { name: 'Tableau de bord', href: '/', icon: Home },
+    { name: 'Modules', href: '/modules', icon: Folder },
     ...(isAdmin ? [
-      { name: 'Utilisateurs', href: '/admin/users', icon: UsersIcon },
-      { name: 'Demandes d\'accès', href: '/admin/requests', icon: UserPlusIcon }
+      { name: 'Utilisateurs', href: '/admin/users', icon: Users },
+      { name: 'Demandes d\'accès', href: '/admin/requests', icon: UserPlus }
     ] : []),
   ];
 
@@ -157,13 +157,13 @@ export function Navbar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href="/profile" className="cursor-pointer">
-                    <UserIcon className="mr-2 h-4 w-4" />
+                    <User className="mr-2 h-4 w-4" />
                     <span>Profil</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/profile/password" className="cursor-pointer">
-                    <KeyIcon className="mr-2 h-4 w-4" />
+                    <Key className="mr-2 h-4 w-4" />
                     <span>Changer le mot de passe</span>
                   </Link>
                 </DropdownMenuItem>
@@ -172,7 +172,7 @@ export function Navbar() {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href="/admin/settings" className="cursor-pointer">
-                        <SettingsIcon className="mr-2 h-4 w-4" />
+                        <Settings className="mr-2 h-4 w-4" />
                         <span>Administration</span>
                       </Link>
                     </DropdownMenuItem>
@@ -180,7 +180,7 @@ export function Navbar() {
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                  <LogOutIcon className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 h-4 w-4" />
                   <span>Se déconnecter</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

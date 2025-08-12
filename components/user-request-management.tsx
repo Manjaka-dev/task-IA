@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { CheckIcon, XIcon, UserIcon, MailIcon, BriefcaseIcon } from 'lucide-react';
+import { Check, X, User, Mail, Shield } from 'lucide-react';
 import { authService } from '@/lib/auth-service';
 import { UserRequest } from '@/lib/types';
 import { useAuth } from '@/components/auth-provider';
@@ -106,7 +106,7 @@ export default function UserRequestManagement() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <UserIcon className="h-5 w-5" />
+          <User className="h-5 w-5" />
           Demandes d'inscription en attente
         </CardTitle>
         <CardDescription>
@@ -140,19 +140,19 @@ export default function UserRequestManagement() {
                 <TableRow key={request.id}>
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
-                      <UserIcon className="h-4 w-4" />
+                      <User className="h-4 w-4" />
                       {request.name}
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <MailIcon className="h-4 w-4" />
+                      <Mail className="h-4 w-4" />
                       {request.email}
                     </div>
                   </TableCell>
                   <TableCell>
                     <Badge className={getRoleColor(request.role)}>
-                      <BriefcaseIcon className="h-3 w-3 mr-1" />
+                      <Shield className="h-3 w-3 mr-1" />
                       {getRoleLabel(request.role)}
                     </Badge>
                   </TableCell>
@@ -168,7 +168,7 @@ export default function UserRequestManagement() {
                         disabled={actionLoading === request.id}
                         className="bg-green-600 hover:bg-green-700"
                       >
-                        <CheckIcon className="h-4 w-4 mr-1" />
+                        <Check className="h-4 w-4 mr-1" />
                         Approuver
                       </Button>
 
@@ -180,7 +180,7 @@ export default function UserRequestManagement() {
                             disabled={actionLoading === request.id}
                             onClick={() => setSelectedRequest(request)}
                           >
-                            <XIcon className="h-4 w-4 mr-1" />
+                            <X className="h-4 w-4 mr-1" />
                             Refuser
                           </Button>
                         </DialogTrigger>

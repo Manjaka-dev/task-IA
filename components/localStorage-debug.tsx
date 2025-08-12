@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, AlertCircle, Trash } from 'lucide-react';
+import { Check, X, AlertCircle, Trash2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { authService } from '@/lib/auth-service';
 import { storageService } from '@/lib/storage-service';
@@ -62,8 +62,9 @@ export default function LocalStorageDebug() {
       }
     } catch (error) {
       console.error('Erreur localStorage:', error);
-      setStorageData({ error: error.message });
-      addTestResult(`❌ Erreur: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      setStorageData({ error: errorMessage });
+      addTestResult(`❌ Erreur: ${errorMessage}`);
     }
   };
 
@@ -93,7 +94,8 @@ export default function LocalStorageDebug() {
       checkStorageStatus();
       checkLocalStorage();
     } catch (error) {
-      addTestResult(`❌ Échec de la réparation: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      addTestResult(`❌ Échec de la réparation: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -124,7 +126,8 @@ export default function LocalStorageDebug() {
         addTestResult('❌ Échec de l\'écriture');
       }
     } catch (error) {
-      addTestResult(`❌ Erreur lors du test: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      addTestResult(`❌ Erreur lors du test: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -143,7 +146,8 @@ export default function LocalStorageDebug() {
         addTestResult('✅ Connexion Supabase OK');
       }
     } catch (error) {
-      addTestResult(`❌ Erreur de connexion: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      addTestResult(`❌ Erreur de connexion: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -234,7 +238,7 @@ export default function LocalStorageDebug() {
             )}
 
             <Button onClick={clearLocalStorage} variant="destructive">
-              <Trash className="w-4 h-4 mr-2" />
+              <Trash2 className="w-4 h-4 mr-2" />
               Vider le stockage
             </Button>
           </div>
@@ -244,7 +248,7 @@ export default function LocalStorageDebug() {
             <Alert>
               <AlertCircle className="w-4 h-4" />
               <AlertDescription>
-                ⚠️ Le localStorage n'est pas disponible. L'application utilise le stockage en mémoire.
+                ⚠️ Le localStorage n&apos;est pas disponible. L&apos;application utilise le stockage en mémoire.
                 Vos données seront perdues lors du rechargement de la page.
               </AlertDescription>
             </Alert>
@@ -254,7 +258,7 @@ export default function LocalStorageDebug() {
             <Alert>
               <AlertCircle className="w-4 h-4" />
               <AlertDescription>
-                🔄 Mode hybride détecté. Certaines données sont en mémoire, d'autres dans localStorage.
+                🔄 Mode hybride détecté. Certaines données sont en mémoire, d&apos;autres dans localStorage.
               </AlertDescription>
             </Alert>
           )}

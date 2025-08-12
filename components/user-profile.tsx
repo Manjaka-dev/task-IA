@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { authService } from '@/lib/auth-service';
+import { supabase } from '@/lib/supabase';
 import { User } from '@/lib/types';
 import { toast } from 'sonner';
 
@@ -66,7 +67,16 @@ export default function UserProfile() {
 
     setIsLoading(true);
     try {
-      await authService.updateProfile(user.id, data);
+      const { error } = await supabase
+        .from('users')
+        .update({
+          name: data.name,
+          avatar: data.avatar
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
       setUser({ ...user, ...data });
       toast.success('Profil mis à jour avec succès');
     } catch (error) {

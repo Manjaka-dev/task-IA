@@ -8,24 +8,28 @@ export const seedData = {
       name: 'Alice Martin',
       email: 'alice@example.com',
       role: 'admin' as const,
+      status: 'active' as const,
       avatar: 'https://ui-avatars.com/api/?name=Alice+Martin&background=6366f1&color=fff'
     },
     {
       name: 'Bob Dupont',
       email: 'bob@example.com',
       role: 'developer' as const,
+      status: 'active' as const,
       avatar: 'https://ui-avatars.com/api/?name=Bob+Dupont&background=8b5cf6&color=fff'
     },
     {
       name: 'Clara Rousseau',
       email: 'clara@example.com',
       role: 'designer' as const,
+      status: 'active' as const,
       avatar: 'https://ui-avatars.com/api/?name=Clara+Rousseau&background=ec4899&color=fff'
     },
     {
       name: 'David Leroy',
       email: 'david@example.com',
       role: 'manager' as const,
+      status: 'active' as const,
       avatar: 'https://ui-avatars.com/api/?name=David+Leroy&background=10b981&color=fff'
     }
   ],
